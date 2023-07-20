@@ -6,11 +6,12 @@ const isDev = mode === "development";
 const isProd = mode === "production";
 
 const config = {
-  outdir: "./build",
+  outdir: "build",
   entryPoints: ["src/index.js"],
   entryNames: "[dir]/bundle.[name]-[hash]",
   bundle: true,
   external: ["https", "http", "url", "zlib"],
+  format: "esm",
   allowOverwrite: true,
   loader: {
     ".png": "file",
