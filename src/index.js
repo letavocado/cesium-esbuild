@@ -1,30 +1,35 @@
-window.CESIUM_BASE_URL = "http://localhost:8000/static/Cesium";
+window.CESIUM_BASE_URL = "http://localhost.net/static/Cesium";
 import { Viewer, Cartesian3, Math } from "cesium";
 
 let la = 0;
 let ln = 0;
 let alt = 0;
-
+let pit = 0.0;
+let yaw = 0.0;
 const viewer = new Viewer("cesiumContainer", {});
 
 // Just test the evaluateJavascript from Android
-function jstest() {
+export function jstest() {
   console.log("Android Native called evaluateJavascript");
   console.log(viewer);
 }
 
 // Just test the JSInterface call from android
-function testd() {
-  ln = D.lon().toFixed(6);
-  la = D.lat().toFixed(6);
-  alt = D.alt() + 1;
+export function testd() {
+  la = D.lat();
+  ln = D.lon();
+  alt = D.alt();
+  pit = D.cpit();
+  yaw = D.cyaw();
   viewer.camera.flyTo({
     destination: Cartesian3.fromDegrees(ln, la, alt),
     orientation: {
-      heading: Math.toRadians(0.0),
-      pitch: Math.toRadians(0),
+      heading: Math.toRadians(yaw),
+      pitch: Math.toRadians(pit),
     },
   });
-  console.log(ln);
+  console.log(pit);
+  console.log(yaw);
+  console.log(Math.toRadians(yaw));
 }
-setInterval(jstest, 5000);
+setInterval(testd, 200);
